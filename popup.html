@@ -4,31 +4,24 @@
   <title>HumanOnly</title>
   <style>
     body { font-family: sans-serif; width: 200px; padding: 10px; }
-    button { width: 100%; padding: 10px; }
+    .switch {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
   </style>
 </head>
 <body>
-  <h3>HumanOnly</h3>
+  <h3>🧠 HumanOnly</h3>
+
+  <div class="switch">
+    <label for="toggle">AI Filter</label>
+    <input type="checkbox" id="toggle">
+  </div>
+
   <button id="rescan">Rescan Page</button>
-  <script>
-    document.getElementById("rescan").onclick = () => {
-      chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
-        chrome.scripting.executeScript({
-          target: {tabId: tabs[0].id},
-          func: () => {
-            const elements = document.querySelectorAll("p, span, div");
-            for (const el of elements) {
-              const text = el.innerText;
-              const aiPhrases = [/as an ai language model/i,/in conclusion,/i,/furthermore,/i,/overall,/i,/it is important to note/i];
-              if (aiPhrases.some(rgx => rgx.test(text))) {
-                el.style.filter = "blur(4px)";
-                el.title = "This content may be AI-generated.";
-              }
-            }
-          }
-        });
-      });
-    };
-  </script>
+
+  <script src="popup.js"></script>
 </body>
 </html>
