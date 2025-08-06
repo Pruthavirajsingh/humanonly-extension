@@ -1,16 +1,20 @@
-/* Blur style for AI-generated content */
-.ai-content-blur {
-  filter: blur(5px);
-  transition: filter 0.3s ease;
-}
-
-.ai-banner {
-  background: #ffdd57;
-  color: #222;
-  padding: 4px 8px;
-  font-size: 12px;
+.ai-detected-text {
+  background-color: rgba(255, 0, 0, 0.2);
+  border: 1px solid red;
+  padding: 2px 4px;
   border-radius: 4px;
-  display: inline-block;
-  margin-bottom: 5px;
+  font-style: italic;
+  position: relative;
 }
 
+.ai-detected-text::after {
+  content: "⚠️ AI-Generated?";
+  font-size: 10px;
+  color: red;
+  position: absolute;
+  top: -10px;
+  right: 0;
+  background: white;
+  padding: 0 2px;
+  border-radius: 3px;
+}
