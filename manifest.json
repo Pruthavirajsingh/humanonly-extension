@@ -1,33 +1,26 @@
 {
   "manifest_version": 3,
-  "name": "AI Content Blocker",
-  "description": "Filters or blocks AI-generated content from webpages.",
-  "version": "1.0",
-  "icons": {
-    "16": "icons/icon16.png",
-    "48": "icons/icon48.png",
-    "128": "icons/icon128.png"
+  "name": "HumanOnly Content Filter",
+  "version": "0.1",
+  "description": "Hide or flag AI-generated content across the web",
+  "permissions": ["activeTab", "scripting"],
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "background.js"
   },
-  "permissions": [
-    "scripting",
-    "tabs"
-  ],
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
-      "16": "icons/icon16.png",
-      "48": "icons/icon48.png",
-      "128": "icons/icon128.png"
+      "16": "icon16.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
     }
-  },
-  "background": {
-    "service_worker": "background.js"
   },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
       "js": ["content.js"],
-      "run_at": "document_idle"
+      "run_at": "document_end"
     }
   ]
 }
