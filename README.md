@@ -42,5 +42,5 @@ vercel --name humanonly-ui
 Make sure `popup.html` is in your root directory or a `public/` folder.
 
 ## 📋 License
-MIT – built by [YourName or TeamName]. Contributions welcome!
+MIT – built by Pruthavirajsingh. Contributions welcome!
 
