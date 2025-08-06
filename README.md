@@ -11,14 +11,15 @@ HumanOnly is a Chrome extension designed for AI-fatigued users – journalists, 
 ## 📦 Project Structure
 ```
 humanonly-extension/
+├── icon16.png
+├── icon48.png
+├── icon128.png
 ├── manifest.json
-├── content.js
 ├── background.js
-├── popup.html
-├── icons/
-│   ├── icon16.png
-│   ├── icon48.png
-│   └── icon128.png
+├── content.js
+├── style.css
+└── popup.html
+
 ```
 
 ## 🧠 How It Works
