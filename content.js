@@ -14,46 +14,58 @@
   ];
 
   const isProbablyAI = (text) => {
-    const lowerText = text.toLowerCase();
+    const lower = text.toLowerCase();
     return (
-      AI_REGEXES.some(rgx => rgx.test(lowerText)) ||
-      AI_KEYWORDS.some(keyword => lowerText.includes(keyword.toLowerCase()))
+      AI_REGEXES.some(rgx => rgx.test(lower)) ||
+      AI_KEYWORDS.some(keyword => lower.includes(keyword.toLowerCase()))
     );
   };
 
   const scanAndHandleAIContent = () => {
-    const elements = document.querySelectorAll("p, span, div");
+    const rawElements = document.querySelectorAll("p, span, div");
+
+    const elements = Array.from(rawElements).filter(el => {
+      const text = el.innerText?.trim();
+      const wordCount = text?.split(/\s+/).length || 0;
+      const style = window.getComputedStyle(el);
+
+      return (
+        text &&
+        wordCount > 5 &&
+        text.length > 30 &&
+        style.display !== "none" &&
+        style.visibility !== "hidden"
+      );
+    });
+
     for (const el of elements) {
       const text = el.innerText;
-      if (text && isProbablyAI(text)) {
-        // Avoid double tagging
-        if (!el.classList.contains("ai-detected-text")) {
-          el.classList.add("ai-detected-text");
-          el.style.filter = "blur(4px)";
-          el.title = "This content may be AI-generated.";
 
-          const tag = document.createElement('span');
-          tag.textContent = "⚠️ AI?";
-          tag.style.cssText = `
-            background: white;
-            color: red;
-            font-size: 10px;
-            border: 1px solid red;
-            padding: 1px 3px;
-            margin-left: 5px;
-            border-radius: 3px;
-          `;
-          el.appendChild(tag);
-        }
+      if (text && isProbablyAI(text) && !el.classList.contains("ai-detected-text")) {
+        el.classList.add("ai-detected-text");
+        el.style.filter = "blur(4px)";
+        el.title = "This content may be AI-generated.";
+
+        const tag = document.createElement("span");
+        tag.textContent = "⚠️ AI?";
+        tag.style.cssText = `
+          background: white;
+          color: red;
+          font-size: 10px;
+          border: 1px solid red;
+          padding: 1px 3px;
+          margin-left: 5px;
+          border-radius: 3px;
+        `;
+        el.appendChild(tag);
       }
     }
   };
 
-  // Only run if extension is enabled
   chrome.storage.sync.get(["enabled"], (data) => {
     if (data.enabled !== false) {
       window.addEventListener("load", scanAndHandleAIContent);
-      setTimeout(scanAndHandleAIContent, 3000);
+      setTimeout(scanAndHandleAIContent, 3000); // also scan delayed content
     }
   });
 })();
