@@ -1,21 +1,25 @@
 {
   "manifest_version": 3,
   "name": "AI Content Blocker",
-  "description": "Block or filter AI-generated content across the web.",
-  "version": "1.0.0",
+  "description": "Filters or blocks AI-generated content from webpages.",
+  "version": "1.0",
   "icons": {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",
     "128": "icons/icon128.png"
   },
   "permissions": [
-    "activeTab",
     "scripting",
-    "storage"
+    "tabs"
   ],
-  "host_permissions": [
-    "<all_urls>"
-  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
   "background": {
     "service_worker": "background.js"
   },
@@ -25,13 +29,5 @@
       "js": ["content.js"],
       "run_at": "document_idle"
     }
-  ],
-  "action": {
-    "default_icon": {
-      "16": "icons/icon16.png",
-      "48": "icons/icon48.png",
-      "128": "icons/icon128.png"
-    },
-    "default_popup": "popup.html"
-  }
+  ]
 }
